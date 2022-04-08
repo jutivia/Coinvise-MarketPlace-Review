@@ -29,8 +29,25 @@ This is an abstract contract which is inherited in the contract and contains fun
 ----
 
 `import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/SafeERC20.sol"`
-- This is a library that adds safety checks to all the ERC20 functions by calling the `_callOptionalReturn()` function on all the said functions
-- `_callOptionalReturn()` performs a low level call to the target token address and verifies the contract of said token contains code and also asserts for success in the low-level call made.
+- This is a library that adds safety checks to all the ERC20 functions by calling the [`_callOptionalReturn()`](#_callOptionalReturn) function on all the said functions
+
+<a id="_callOptionalReturn"></a>
+- `_callOptionalReturn()` a private function that performs a low level call to the target token address and verifies the contract of said token contains code and also asserts for success in the low-level call made.
+<a id="safeTransfer"></a>
+- `safeTransfer()` => Takes in the parameters:
+    - IERC20 `token` => contract instance of the ERC20 token
+    - address `to` => address the token is to be sent to
+    - uint256 `value` => amount of tokens to be transferred
+
+    - calls the private function [`_callOptionalReturn()`](#_callOptionalReturn) with the defined parameters
+
+<a id="safeTransferFromERC20"></a>
+- `safeTransferFrom()` => Takes in the parameters:
+    - IERC20 token => contract instance of the ERC20 token
+    - address `from`
+    - address `to` => address the token is to be sent to
+    - uint256 `value` => amount of tokens to be transferred
+    - It calls the private function [`_callOptionalReturn()`](#_callOptionalReturn) with the defined parameters
 ---
 
 `import {EnumerableSet} from "@openzeppelin/contracts/utils/EnumerableSet.sol"`
@@ -196,8 +213,8 @@ It inherits contracts `Initializable`, `OwnableUpgradeable`, `EIP712MetaTransact
 
 ##
     _calculateCut()
-- This  ` internal`   ` view`  function takes in the number `amount` as a parameter and calculates the Coinvise's cut of any listed amount of an NFT.
-- It returns the multiplication of the `amount` parameter and the `premiumPercentage`, divvided by the multiplication of the exponent of (`premiumPercentageDecimals` + 2).
+- This  ` internal`   ` view`  function takes in the number `amount` as a parameter and calculates the Coinvise's cut of the listed amount of an NFT.
+- It returns the multiplication of the `amount` parameter and the `premiumPercentage`, divided by the multiplication of the exponent of (`premiumPercentageDecimals` + 2).
 
 ##
     getCurrentNftListingIds()
@@ -297,11 +314,10 @@ It inherits contracts `Initializable`, `OwnableUpgradeable`, `EIP712MetaTransact
 - It requires that the paymentType of the listing should be equal to 1, (i.e the payment type is of type ERC20) otherwise, reverts the whole operation.
 - It validates the amount sent by requiring the `msg.value` (amount sent with the function call) is equal to the addition of listing amount and the amount got from the internal function [`_calculateCut()`](#_calculateCut) (it takes in the listing amount as its argument).
 - It creates a local instance of the ERC20's contract address and requires that the address of the Coinvise NFT marketplace has the allowance greater than or equal to the amount of tokens to be collected from `_sender`, otherwise, reverts the whole operation
-
 - It creates a local instance of the nftToken's contract address and requires that the address of the Coinvise NFT marketplace has been approved, otherwise, reverts the whole operation.
 - It uses the `transfer` method to send the listing amount attached to the  [`NftListing`](#NftListing) to the address that listed the NFT.
-- it calls the ERC20 function `safeTransferFrom()` to transfer the expected amount of tokens (addition of listing amount and the amount got from the internal function [`_calculateCut()`](#_calculateCut)) to the Coinvise marketplace contract.
-- It calls the ERC20 function `safeTransfer()` to transfer only the listing amount from the Coinvise marketplace contract to the address that listed the NFT, while the Coinvise marketplace contract keeps the cut from the internal function, [`_calculateCut()`]
+- it calls the `SafeERC20` contract function [`safeTransferFrom()`](#safeTransferFromERC20) to transfer the expected amount of tokens (addition of listing amount and the amount got from the internal function [`_calculateCut()`](#_calculateCut)) from the `_sender` to the Coinvise marketplace contract.
+- It then calls the `SafeERC20` contract function [`safeTransfer()`](#safeTransfer)  to transfer only the listing amount from the Coinvise marketplace contract to the address that listed the NFT, while the Coinvise marketplace contract keeps the cut from the internal function, [`_calculateCut()`]
 - It then uses a ERC721 function `safeTransferFrom()` to send the NFT ownership from the address that listed it, to the buyer (address of the `_sender`)
  - It closes the listing the NFt by calling the  ` internal`  function [`_unlistNft()`](#_unlistNft), which unlists the NFT
 - It emits the event [`NftBought`](#NftBought)
@@ -311,7 +327,41 @@ It inherits contracts `Initializable`, `OwnableUpgradeable`, `EIP712MetaTransact
 - This ` external`  function takes in a NFTListing Id and increases the like counter for a listing if's it's actvie
 - It uses the modifier [`pausible`](#pausible)
 - It assigns the address of the person calling the function to a local variable `_sender`.
+- It requires that the array of `_listedNFTTokenIds` contains the NFTListing Id passed as the parameter into the function, i.e checks to see if the NFT hs already been delisted, otherwise reverts the whole operation.
+- It requires the mapping `hasUserLikedNftListing` of `_sender`  to the NFTListing id, is `false` (i.e checking to see if the user has not already liked the NFT), otherwise, reverts the whole operation.
+- If false, it then sets the mapping `hasUserLikedNftListing` of `_sender`  to the NFTListing id to `true` (I.e the user likes the NFT)
+- it emits an event [`NftListingLiked`](#NftListingLiked)
 
-- It removes the the NFT-listing id from the array of `_listedNftTokenIds`
-- It deletes the mapping, `nftListingById` of the NFTListing Id
-- it emits an event [`NftDelisted`](#NftDelisted)
+##
+    undoLikeNftListing()
+- This ` external` function takes in a NFTListing Id and increases the like counter for a listing if's it's actvie
+- It uses the modifier [`pausible`](#pausible)
+- It assigns the address of the person calling the function to a local variable `_sender`.
+- It requires that the array of `_listedNFTTokenIds` contains the NFTListing Id passed as the parameter into the function, i.e checks to see if the NFT hs already been delisted, otherwise reverts the whole operation.
+- It requires the mapping `hasUserLikedNftListing` of `_sender`  to the NFTListing id, is `true` (i.e checking to see if the user has liked the NFT), otherwise, reverts the whole operation.
+- If true, it then sets the mapping `hasUserLikedNftListing` of `_sender`  to the NFTListing id to `false` (I.e the user dislikes the NFT)
+- it emits an event [`NftListingLikeReverted`](#NftListingLikeReverted)
+
+##
+    withdrawEthPremiums()
+- This  ` external`  function takes in an address `_to` as a paramenter.
+- It sends all the ETH balance of the coinvise contract to the address `to`.
+- It uses the modifier [`onlyOwnerMeta`](#onlyOwnerMeta)
+- It uses the `transfer` method to send all the ETH balance of the coinvise contract to the address `to`.
+- it emits an event [`WithdrawnEthPremiums`](#WithdrawnEthPremiums)
+
+##
+    withdrawErc20Premiums()
+- This  ` external`  function takes in an address `_to`, and an ERC20 token contract address as paramenters.
+- It sends all the balance of the ERC20 tokens in the coinvise contract to the address `to`.
+- It uses the modifier [`onlyOwnerMeta`](#onlyOwnerMeta)
+- It uses the `SafeERC20` contract function [`safeTransfer()`](#safeTransfer)  to send the balance of the ERC20 tokens in the coinvise contract to the address `to`.
+- it emits an event [`WithdrawnErc20Premiums`](#WithdrawnErc20Premiums)
+
+##
+    fallback()
+- This is a fallback method in the contract that allows ethers and data to be sent to the contract directly.
+
+##
+    receive()
+- This is a fallback method in the contract that allows ethers to be sent to the contract directly.
