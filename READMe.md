@@ -9,14 +9,14 @@
 <a id="OwnableUpgradeable"></a>`import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol"`
 
 This is an abstract contract which is inherited in the contract and contains functions:
-- <a id="ownable"></a>`__Ownable_init()` => initializes the contract setting the contract owner initially as the person that deploys the contract
+- <a id="ownable"></a>`__Ownable_init()` => that initializes the contract by setting the contract owner initially as the person that deploys the contract
 - `renounceOwnership()` => that renounces the contract owner, by changing the owner to address(0); and
-- `transferOwnership()` => transfers ownership to the address passed to it.
+- `transferOwnership()` => that transfers ownership to the address passed to it.
 ----
 
 
 `import {SafeMath} from "@openzeppelin/contracts/math/SafeMath.sol"`
-- This is a library that contains arithmetic operations in solidity with added overflow
+- This is a library that contains arithmetic operations in solidity with added overflow and underflow checks.
 -----
 
 
