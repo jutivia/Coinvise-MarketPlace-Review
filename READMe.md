@@ -2,12 +2,12 @@
 
 ## Imports
 ---
-<a id="Initializable"></a>
+<a id="initializable"></a>
 `import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol"`
 - This is an abstract contract which is inherited in the contract and  contains a modifier `initializer` which prevents an initializier function from being invoked twice.
 ----
 
-<a id="OwnableUpgradeable"></a>`import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol"`
+<a id="ownableupgradeable"></a>`import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol"`
 
 This is an abstract contract which is inherited in the contract and contains functions:
 - <a id="ownable"></a>`__Ownable_init()` => that initializes the contract by setting the contract owner initially as the person that deploys the contract
@@ -64,14 +64,14 @@ This is an abstract contract which is inherited in the contract and contains fun
  
 `import {EIP712MetaTransactionUpgradeable} from "./lib/EIP712MetaTransactionUpgradeable/EIP712MetaTransactionUpgradeable.sol"`
 
-This contract inherits the [`Initializable`](#Initializable) and `EIP712BaseUggradable` contracts 
+This contract inherits the [`Initializable`](#initializable) and `EIP712BaseUggradable` contracts 
  
 The `EIP712BaseUpgradeable` contract contains functions:
 - <a id="initialize"></a>`_initialize()` it takes in the strings `name` and `version` as paramenters, and does a keccak hash of the abi.encode of the EIP712_DOMAIN_TYPEHASH and the name, version, the network chainId and contract address.
 - `getChainID()` which uses assembly to generate the chain ID
 - `getDomainSeperator()` returns the hashed value in function _initialize()
 - `toTypedMessageHash()` returns the hashed message in EIP712 compatible form, so that it can be used to recover signer from signature signed using EIP712 formatted data.
-
+<a id ="EIP712MetaTransactionUpgradeable"> </a>
 `EIP712MetaTransactionUpgradeable` contains functions:
 - `_initialize()` takes in the string parameters _name, and _version which makes use of the EIP712BaseUpgradeable's initialize function.
 - `executeMetaTransaction()` => a  ` payable`  public function that:
@@ -83,7 +83,7 @@ The `EIP712BaseUpgradeable` contract contains functions:
 <br>
 
 # Contract `NFTMarketPlace`
-It inherits contracts `Initializable`, `OwnableUpgradeable`, `EIP712MetaTransactionUpgradeable` and `ReentrancyGuardUpgradeable`.
+It inherits contracts [`Initializable`](#initializable), [`OwnableUpgradeable`](#ownableupgradeable), [`EIP712MetaTransactionUpgradeable`](#EIP712MetaTransactionUpgradeable) and [`ReentrancyGuardUpgradeable`](#ReentrancyGuardUpgradeable).
 
 ## Events
 ----
@@ -171,12 +171,12 @@ event `WithdrawnErc20Premiums` is emitted when a all the contract ERC20 balance 
 ##
 ---
     pausable
-- it requires isPaused to be false, otherwise, it reverts the whole operation.
+- it requires `isPaused` to be `false`, otherwise, it reverts the whole operation.
 
 <a id="onlyOwnerMeta"></a>
 ##
     onlyOwnerMeta
-- requires that `msg.sender` is equal to assigned owner in the [`OwnableUpgradeable`](#OwnableUpgradeable) contract, otherwise, reverts the whole operation
+- requires that `msg.sender` is equal to assigned owner in the [`OwnableUpgradeable`](#ownableupgradeable) contract, otherwise, reverts the whole operation
 
 ## Functions
 ---
@@ -194,7 +194,7 @@ event `WithdrawnErc20Premiums` is emitted when a all the contract ERC20 balance 
 - It also calls the function [`_initialize()`](#initialize) from `EIP712MetaTransactionUpgradeable` contract.
 - It then asigns the `_premiumPercentage`, `_premiumPercentageDecimals` and `_nftListingFee` to their corresponding state variables.
 - It contract is also defined as not paused, by setting the `isPaused` variable to false, and the `isPaymentTokenWhiteListActive` is set to true
-- Finally, there's a loop through the array of `whiteListedTokens`, where the mapping called `isPaymentTokenWhiteListed` takes in the white listed addresses and maps them to a boolean of `true`.
+- Finally, there's a loop through the array of `whiteListedTokens`, where the mapping called `isPaymentTokenWhiteListed` takes in the addresses to be whitelisted and maps them to a boolean of `true`.
 
 ##
     pauseMarketplace()
