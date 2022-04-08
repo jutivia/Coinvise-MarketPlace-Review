@@ -151,8 +151,8 @@ event `WithdrawnErc20Premiums` is emitted when a all the contract ERC20 balance 
     - the nft token ID
     - the address of the EOA that listed it
     - the payment type (this is defaultly 1 as an ERC20 token, or 0 as Ethers)
-    - payment amount expecteda; and
-    -the address of the ERC20 token given in exchange.
+    - payment amount expected; and
+    - the address of the ERC20 token given in exchange.
     
     ##
        {
