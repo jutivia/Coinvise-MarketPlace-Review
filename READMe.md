@@ -64,7 +64,7 @@ This is an abstract contract which is inherited in the contract and contains fun
  
 `import {EIP712MetaTransactionUpgradeable} from "./lib/EIP712MetaTransactionUpgradeable/EIP712MetaTransactionUpgradeable.sol"`
 
-This contract iherits the [`Initializable`](#Initializable) and `EIP712BaseUggradable` contracts 
+This contract inherits the [`Initializable`](#Initializable) and `EIP712BaseUggradable` contracts 
  
 The `EIP712BaseUpgradeable` contract contains functions:
 - <a id="initialize"></a>`_initialize()` it takes in the strings `name` and `version` as paramenters, and does a keccak hash of the abi.encode of the EIP712_DOMAIN_TYPEHASH and the name, version, the network chainId and contract address.
