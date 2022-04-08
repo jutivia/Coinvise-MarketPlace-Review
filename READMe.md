@@ -1,5 +1,11 @@
 # Reviewing the <a target="_blank" href="https://github.com/coinvise/contracts/blob/main/contracts/NFTMarketplace.sol">Coinvise Market Place </a>Contract
 
+## About Coinvise
+---
+Coinvise is an open platform on Ethereum where creators can launch a social & build a tokenized community. It is built for internet creators and the future of digital collectives.
+####
+The coinvise `NFTMarketplace` smart contract is written such that creatives can list or unlist their NFTs for sale, have people buy, and pay in ethers or the tokens of their choice, while coinvise gets a cut from each sale.
+
 ## Imports
 ---
 <a id="initializable"></a>
