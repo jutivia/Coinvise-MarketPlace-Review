@@ -4,7 +4,7 @@
 ---
 <a id="Initializable"></a>
 `import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol"`
-- This is an abstract contract which is inherited in the contract and  contains a modifier `initializer` which protects an initializier function from being invoked twice.
+- This is an abstract contract which is inherited in the contract and  contains a modifier `initializer` which prevents an initializier function from being invoked twice.
 ----
 
 <a id="OwnableUpgradeable"></a>`import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol"`
@@ -23,7 +23,7 @@ This is an abstract contract which is inherited in the contract and contains fun
 
 `import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol"` 
 
-- This is an interface that that's required for an ERC721 compliant contract
+- This is an interface that's required for an ERC721 compliant contract
 ----
 
 `import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol"`
@@ -35,7 +35,7 @@ This is an abstract contract which is inherited in the contract and contains fun
 - This is a library that adds safety checks to all the ERC20 functions by calling the [`_callOptionalReturn()`](#_callOptionalReturn) function on all the said functions
 
 <a id="_callOptionalReturn"></a>
-- `_callOptionalReturn()` a private function that performs a low level call to the target token address and verifies the contract of said token contains code and also asserts for success in the low-level call made.
+- `_callOptionalReturn()` a private function that performs a low level call to the target token address and verifies the contract of said token contains code and also asserts for success in the low-level calls made.
 <a id="safeTransfer"></a>
 - `safeTransfer()` => Takes in the parameters:
     - IERC20 `token` => contract instance of the ERC20 token
@@ -54,7 +54,7 @@ This is an abstract contract which is inherited in the contract and contains fun
 ---
 
 `import {EnumerableSet} from "@openzeppelin/contracts/utils/EnumerableSet.sol"`
-- This is a libarary for managing bytes32 data types. It contains functions to add, remove,etc. bytes32 from a bytes32 array.
+- This is a library for managing bytes32 data types. It contains functions to add, remove, etc. bytes32 from a bytes32 array.
 ---
 <a id="ReentrancyGuardUpgradeable"></a>
 ##
@@ -89,7 +89,7 @@ It inherits contracts `Initializable`, `OwnableUpgradeable`, `EIP712MetaTransact
 ----
 <a id="NftListed"></a>
 ##
-event `NftListed` is emitted when a new NFT is listed. It follows the structure below:
+event `NftListed` is emitted when a NFT is listed. It follows the structure below:
 
     event NftListed(
             uint256 listingId,
@@ -103,7 +103,7 @@ event `NftListed` is emitted when a new NFT is listed. It follows the structure 
 
 <a id="NftDelisted"></a>
 ##
-event `NftDelisted` is emitted when a new NFT is delisted. It follows the structure below:
+event `NftDelisted` is emitted when a NFT is delisted. It follows the structure below:
 
     event NftDelisted(uint256 listingId);  
 
@@ -176,7 +176,7 @@ event `WithdrawnErc20Premiums` is emitted when a all the contract ERC20 balance 
 <a id="onlyOwnerMeta"></a>
 ##
     onlyOwnerMeta
-- requires that msg.sender is equal to assigned owner in the [`OwnableUpgradeable`](#OwnableUpgradeable) contract, otherwise, reverts the whole operation
+- requires that `msg.sender` is equal to assigned owner in the [`OwnableUpgradeable`](#OwnableUpgradeable) contract, otherwise, reverts the whole operation
 
 ## Functions
 ---
