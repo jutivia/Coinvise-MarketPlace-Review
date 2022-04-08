@@ -3,7 +3,7 @@
 ## Imports
 ---
 `import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol"`
-- This is an abstract contract whichis inherited in the contract and  contains a modifier `initializer` which protects an initializier function from being invoked twice.
+- This is an abstract contract which is inherited in the contract and  contains a modifier `initializer` which protects an initializier function from being invoked twice.
 ----
 
 <a id="OwnableUpgradeable"></a>`import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol"`
