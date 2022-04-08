@@ -89,6 +89,8 @@ It inherits contracts `Initializable`, `OwnableUpgradeable`, `EIP712MetaTransact
 ----
 <a id="NftListed"></a>
 ##
+event `NftListed` is emitted when a new NFT is listed. It follows the structure below:
+
     event NftListed(
             uint256 listingId,
             address nftTokenAddress,
@@ -101,26 +103,38 @@ It inherits contracts `Initializable`, `OwnableUpgradeable`, `EIP712MetaTransact
 
 <a id="NftDelisted"></a>
 ##
+event `NftDelisted` is emitted when a new NFT is delisted. It follows the structure below:
+
     event NftDelisted(uint256 listingId);  
 
 <a id="NftListingLiked"></a>
 ##
+event `NftListingLiked` is emitted when a listed NFT is liked. It follows the structure below:
+
     event NftListingLiked(address indexed likedBy, uint256 nftListingId);
 
 <a id="NftListingLikeReverted"></a>
 ##
+event `NftListingLikeReverted` is emitted when a listed liked NFT is unliked. It follows the structure below:
+
     event NftListingLikeReverted(address indexed likedBy, uint256 nftListingId);
 
 <a id="NftBought"></a>
 ##
+event `NftBought` is emitted when a listed NFT is bought. It follows the structure below:
+
     event NftBought(address indexed buyer, uint256 nftListingId);
 
 <a id="WithdrawnEthPremiums"></a>
 ##
+event `WithdrawnEthPremiums` is emitted when all the contract ETH is withdrawn by the contract owner. It follows the structure below:
+
     event WithdrawnEthPremiums(address indexed recipient, uint256 amount);
 
 <a id="WithdrawnErc20Premiums"></a>
 ##
+event `WithdrawnErc20Premiums` is emitted when a all the contract ERC20 balance of a particular token is withdrawn by the contract owner. It follows the structure below:
+
     event WithdrawnErc20Premiums(
         address indexed recipient,
         IERC20 erc20Token,
